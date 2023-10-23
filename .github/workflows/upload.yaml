@@ -1,0 +1,29 @@
+name: Ballerina Packaging and Uploading
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+    
+      - name: Ballerina Build
+        uses: ballerina-platform/ballerina-action@master
+        with:
+          args: 
+            pack
+
+      - name: Ballerina Push
+        uses: ballerina-platform/ballerina-action@master
+        with:
+          args: 
+            push 
+        env: 
+            BALLERINA_CENTRAL_ACCESS_TOKEN: ${{ secrets.BallerinaToken }}
